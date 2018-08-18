@@ -3,6 +3,7 @@ const ev = new EventEmitter();
 
 var express = require('express');
 var app = express();
+var axios = require('axios');
 
 var server = app.listen(8080, function () {
     console.log("Node.js is listening to PORT:" + server.address().port);
@@ -18,7 +19,7 @@ app.get('/recog/', function (req, res) {
 // var deeplenz = require('./deeplenz');
 var omron = require('./omron/omron');
 // var clova = require('./clova');
-// var ar_control = require('./ar_control');
+var ar_control = require('./ar_control')();
 
 var obj = {};
 
@@ -30,9 +31,11 @@ var omron_arduino = function () {
     });
     om.on('flat', function (obj) {
         console.log('>>omron: たいらになるにゃー');
+        ar_control.flat()
     });
     om.on('round', function (obj) {
         console.log('>>omron: まるまるにゃー');
+        ar_control.round()
     });
 
     om.init(obj);
@@ -41,7 +44,15 @@ omron_arduino(obj);
 
 // Clova -> arduino
 // Client API を定期的に叩く
-
-
-
-// Deeplenz -> arduino
+var oide = function(){
+    axios.get('http://13.230.152.221:5555/oidecheck')
+    .then(response => {
+        console.log(response.data.oideFlag)
+        if(response.data.oideFlag){
+            ar_control.come();
+        } else {
+            ar_control.run();
+        }
+    });
+}
+setInterval(oide, 5000);
