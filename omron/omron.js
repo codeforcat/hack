@@ -16,7 +16,7 @@ module.exports = function () {
             // 1分を制限時間としてデバイスを検索する。
             return envsensor.discover({
                 duration: 60000,
-                idFilter: '5544cf98550c40078ee4ccb8fd295f06',
+                idFilter: 'c2fea8da25e24d2594d54f1adb953d58',
                 quick: true
             });
         }).then((device_list) => {
@@ -47,6 +47,7 @@ module.exports = function () {
                 eventEmitter.emit('measure', data);
 
             };
+            console.log('IDにゃー：' + device.id)
             return device.connect();
         }).then(() => {
             console.log('Connected.');
