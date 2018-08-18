@@ -33,6 +33,11 @@ struct RGB {
   int r, g, b;
 };
 
+// 環境変数の設定
+int max_random = 5;
+int idle_time = 300;
+int time = 70;
+
 //color：色を指定（0.0「赤」→0.5「緑」→1.0「青」）
 //bri：輝度（0.0「0」→1.0「255」）
 struct RGB getGrad ( float color, float bri ) {
@@ -103,7 +108,82 @@ void loop() {
     pixels.setPixelColor(i, pixels.Color( c.r, c.g, c.b ));
     pixels.show();
 
+   /**
+   colorWipeIncrease(pixels.Color(255, 0, 0), time); // Red
+   colorWipeDecrease(pixels.Color(255, 0, 0), time); // Red
+   **/
+  
+  //colorWipeSimpleIncrease(pixels.Color(255, 0, 0), time); // Red
+  //colorWipeSimpleDecrease(pixels.Color(255, 0, 0), time); // Red
+
+  /**
+  turnOff();
+  **/
+
   }
   delay( 1 );
   
+}
+
+/////////////////////////////////////////////////////
+
+// LED電源OFF処理
+void turnOff() {
+  for (int i=0;i<pixels.numPixels();i++) {
+    pixels.setPixelColor(i, 0);
+  }
+}
+
+// 単色のチェイス（+方向/継続）
+// 引数１：色・引数２：時間
+// <前提>消灯中
+void colorWipeIncrease(uint32_t c, uint8_t wait) {
+  for(uint16_t i=0; i<pixels.numPixels(); i++) {
+    pixels.setPixelColor(i, c);
+    pixels.show();
+    delay(wait);
+  }
+}
+
+// 単色のチェイス（-方向/継続）
+// 引数１：色・引数２：時間
+// <前提>点灯中
+void colorWipeDecrease(uint32_t c, uint8_t wait) {
+  for(uint16_t i=pixels.numPixels(); i>0; i--) {
+    pixels.setPixelColor(i, 0);
+    pixels.show();
+    delay(wait);
+  }
+}
+
+// 単色のチェイス（+方向/単発）
+// 引数１：色・引数２：時間
+// <前提>消灯中
+void colorWipeSimpleIncrease(uint32_t c, uint8_t wait) {
+  for(uint16_t i=0; i<pixels.numPixels(); i++) {
+    pixels.setPixelColor(i, c);
+    pixels.setPixelColor(i-1, 0);
+    pixels.show();
+    //ランダムの結果により静止
+    if (random(max_random) > 3) {
+       delay(idle_time);
+    }
+    delay(wait);
+  }
+}
+
+// 単色のチェイス（-方向/単発）
+// 引数１：色・引数２：時間
+// <前提>点灯中
+void colorWipeSimpleDecrease(uint32_t c, uint8_t wait) {
+  for(uint16_t i=pixels.numPixels(); i>0; i--) {
+    pixels.setPixelColor(i, c);
+    pixels.setPixelColor(i+1, 0);
+    pixels.show();
+    //ランダムの結果により静止
+    if (random(max_random) > 3) {
+       delay(idle_time);
+    }
+    delay(wait);
+  }
 }
