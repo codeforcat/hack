@@ -45,6 +45,14 @@ module.exports = function() {
     console.log("mesure");
     console.log(data);
     mesure_data = data;
+    // data.temperature;
+    // data.humidity;
+    // data.ambientLight;
+    // data.uvIndex;
+    // data.pressure;
+    // data.soundNoise;
+    // data.discomfortIndex;
+    // data.heatStroke;
   };
 
   return eventEmitter;
