@@ -1,8 +1,13 @@
 const EventEmitter = require('events').EventEmitter;
 const ev = new EventEmitter();
 
+const bodyParser = require('body-parser');
+
 var express = require('express');
 var app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 var axios = require('axios');
 
 var server = app.listen(8080, function () {
@@ -10,7 +15,11 @@ var server = app.listen(8080, function () {
 });
 
 app.get('/recog/', function (req, res) {
-    console.log('>>deeplenz: tag:' + req.query.tag + ' appear: ' + req.query.appear);
+    console.log(req.body)
+    // console.log('>>deeplenz: tag:' + req.body.tag + ' appear: ' + req.body.appear);
+    if (req.body.tag == 'dog' && req.body.appear == 'true') {
+        ar_control.run();
+    }
     res.send('にゃーん');
 });
 
@@ -42,14 +51,12 @@ omron_arduino(obj);
 
 // Clova -> arduino
 // Client API を定期的に叩く
-var oide = function(){
+var oide = function () {
     axios.get('http://13.230.152.221:5555/oidecheck')
-    .then(response => {
-        if(response.data.oideFlag){
-            ar_control.come();
-        } else {
-            ar_control.run();
-        }
-    });
+        .then(response => {
+            if (response.data.oideFlag) {
+                ar_control.come();
+            }
+        });
 }
 setInterval(oide, 1000);
