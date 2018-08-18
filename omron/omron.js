@@ -18,6 +18,7 @@ module.exports = function () {
             // 1分を制限時間としてデバイスを検索する。
             return envsensor.discover({
                 duration: 60000,
+                idFilter: '5544cf98550c40078ee4ccb8fd295f06',
                 quick: true
             });
         }).then((device_list) => {
@@ -27,21 +28,22 @@ module.exports = function () {
             // `EnvsensorDevice` object representing the found device
             device = device_list[0];
             device.onsensordata = (data) => {
-                json = JSON.stringify(data);
-                obj = JSON.parse(json);
+                // let json = JSON.stringify(data);
+                // let parsed = JSON.parse(json);
                 let currentCondition;
-                if (obj['temperature'] > 20.0) {
-                    currentCondition = 'high';
-                } else {
-                    currentCondition = 'low';
-                }
-                //TODO JSONで取得したデータを全て送る。
-                // console.log(JSON.stringify(data, null, '  '));
-                eventEmitter.emit('measure', data)
+                data.temperature = data.temperature > 20.0 ? (currentCondition = 'high', 1) : (currentCondition = 'low', 0);
+                data.humidity = data.humidity > 50.0 ? 1 : 0;
+                data.ambientLight = data.ambientLight > 100 ? 1 : 0;
+                data.uvIndex = data.uvIndex > 1 ? 1 : 0;
+                data.pressure = data.pressure > 1020 ? 1 : 0;
+                data.soundNoise = data.soundNoise > 40 ? 1 : 0;
+                data.discomfortIndex = data.discomfortIndex > 10 ? 1 : 0;
+                data.heatStroke = data.heatStroke > 30 ?  1 : 0;
+                console.log(JSON.stringify(data, null, '  '));
+                eventEmitter.emit('measure', data);
 
                 if (condition !== currentCondition) {
                     condition = currentCondition;
-                    //TODO 状態データを送る
                     // console.log(condition);
                     eventEmitter.emit('conditionChange', condition);
                 }
@@ -50,7 +52,7 @@ module.exports = function () {
         }).then(() => {
             console.log('Connected.');
             return device.setBasicConfigurations({
-                measurementInterval: 5
+                measurementInterval: 1
             });
         }).then(() => {
             return device.startMonitoringData();
@@ -65,7 +67,5 @@ module.exports = function () {
         omron(obj);
     }
     eventEmitter.init = _init;
-
     return eventEmitter;
-
 };
