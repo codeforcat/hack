@@ -60,9 +60,31 @@ var omron_arduino = function () {
 }
 omron_arduino(obj);
 
+// Clova -> arduino
+// Client API を読み込む
+var io = require('socket.io-client');
+
+// 通信先のサーバを指定する
+// var socket = io('http://localhost:8080');
+var socket = io('http://13.230.152.221:8080');
+
+socket.on('connecttest', function (data) {
+  // サーバから受け取ったデータを出力する
+  console.log(data);
+  socket.emit('fromclient', { my: 'data' });
+});
+socket.on('oide', function (data) {
+  // サーバから受け取ったデータを出力する
+});
+
+
+// Deeplenz -> arduino
+
+
 //johnny-fiveルーチン：直書きします
+//気温など6種類を送信
 function jhonny_measure(data){
-    console.log('android:' + data)
+    console.log('arduino:' + JSON.stringify(data));
     board.on("ready", function() {
         var temperature = new five.Pin({pin:3, mode: five.Pin.PWM});
         var humidity = new five.Pin({pin:5, mode: five.Pin.PWM});
@@ -79,3 +101,4 @@ function jhonny_measure(data){
         uvIndex.write(data.uvIndex);
       });
 }
+// 
