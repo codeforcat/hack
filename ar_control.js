@@ -4,7 +4,7 @@ module.exports = function() {
   var eventEmitter = new events.EventEmitter();
   var five = require("johnny-five");
   var board = new five.Board();
-  var mesure_data = {};
+  var measure_data = {};
 
   board.on("ready", function() {
     var strobe = new five.Pin({
@@ -41,10 +41,10 @@ module.exports = function() {
     console.log("run");
 
   };
-  eventEmitter.mesure = function(data) {
-    console.log("mesure");
+  eventEmitter.measure = function(data) {
+    console.log("measure");
     console.log(data);
-    mesure_data = data;
+    measure_data = data;
     // data.temperature;
     // data.humidity;
     // data.ambientLight;

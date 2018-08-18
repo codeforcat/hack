@@ -7,4 +7,4 @@ ar_control.run()
 var data = {
   aaaa: "aaaaa"
 }
-ar_control.mesure(data)
+ar_control.measure(data)

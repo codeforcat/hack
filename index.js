@@ -27,14 +27,12 @@ var obj = {};
 var omron_arduino = function () {
     let om = omron();
     om.on('measure', function (obj) {
-        console.log('>>omron: 気温は' + obj.temperature);
+        ar_control.measure()
     });
     om.on('flat', function (obj) {
-        console.log('>>omron: たいらになるにゃー');
         ar_control.flat()
     });
     om.on('round', function (obj) {
-        console.log('>>omron: まるまるにゃー');
         ar_control.round()
     });
 
@@ -47,7 +45,6 @@ omron_arduino(obj);
 var oide = function(){
     axios.get('http://13.230.152.221:5555/oidecheck')
     .then(response => {
-        console.log(response.data.oideFlag)
         if(response.data.oideFlag){
             ar_control.come();
         } else {
@@ -55,4 +52,4 @@ var oide = function(){
         }
     });
 }
-setInterval(oide, 5000);
+setInterval(oide, 1000);
