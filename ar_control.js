@@ -12,22 +12,26 @@ module.exports = function () {
   var board = new five.Board();
 
   board.on("ready", function () {
-    var strobeRound = new five.Pin(0);
-    var strobeFlat = new five.Pin(1);
+    var strobeRound = new five.Pin(7);
+    var strobeFlat = new five.Pin(8);
     var strobeCome = new five.Pin(2);
-    var strobeRun = new five.Pin(3);
+    var strobeRun = new five.Pin(4);
 
     eventEmitter.round = function () {
       console.log("round");
       strobeRound.high();
+      strobeFlat.low();
     };
     eventEmitter.flat = function () {
       console.log("flat");
+      strobeRound.low();
       strobeFlat.high();
     };
     eventEmitter.come = function () {
       console.log("come");
       strobeCome.high();
+      strobeRound.low();
+      strobeFlat.low();
       setTimeout(function () {
         strobeCome.low();
       }, 1000);
@@ -35,13 +39,15 @@ module.exports = function () {
     eventEmitter.run = function () {
       console.log("run");
       strobeRun.high();
+      strobeRound.low();
+      strobeFlat.low();
       setTimeout(function () {
         strobeRun.low();
       }, 1000);
     };
     eventEmitter.measure = function (data) {
       console.log("measure");
-      console.log(data);
+      // console.log(data);
       mesure_data = data;
       // data.temperature;
       // data.humidity;
