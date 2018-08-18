@@ -8,7 +8,6 @@ var app = express();
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-var axios = require('axios');
 
 var server = app.listen(8080, function () {
     console.log("Node.js is listening to PORT:" + server.address().port);
@@ -23,6 +22,7 @@ app.get('/recog/', function (req, res) {
     res.send('にゃーん');
 });
 
+var axios = require('axios');
 
 // モジュール
 // var deeplenz = require('./deeplenz');
@@ -47,7 +47,11 @@ var omron_arduino = function () {
 
     om.init(obj);
 }
-omron_arduino(obj);
+
+ar_control.on("johnnyready", function () {
+    omron_arduino(obj);
+});
+
 
 // Clova -> arduino
 // Client API を定期的に叩く
