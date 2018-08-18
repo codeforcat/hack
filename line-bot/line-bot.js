@@ -37,8 +37,8 @@ function postEvent() {
                 type: 'text',
                 text: 'kkk'
             }
-            return client.postMessage('U39f13d04a4035afccd22c989f8029a39', message);
-        }
+            // <to>はユーザIDなどに置き換え
+            return client.postMessage('<to>', message);        }
     });
 }
 
