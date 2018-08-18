@@ -36,7 +36,7 @@ var obj = {};
 var omron_arduino = function () {
     let om = omron();
     om.on('measure', function (obj) {
-        ar_control.measure()
+        ar_control.measure(obj)
     });
     om.on('flat', function (obj) {
         ar_control.flat()
