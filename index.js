@@ -1,5 +1,14 @@
 const EventEmitter = require('events').EventEmitter;
 const ev = new EventEmitter();
+const request = require('request');
+
+//リクエストヘッダーを定義
+var headers = {
+    'Content-Type':'application/json'
+}
+
+var five = require("johnny-five");
+var board = new five.Board();
 
 var express = require('express');
 var app = express();
@@ -28,6 +37,20 @@ var omron_arduino = function () {
     let om = omron();
     om.on('measure', function (obj) {
         ar_control.measure()
+
+        //オプションを定義
+        var options = {
+            url: 'https://sample-bot-node.herokuapp.com/sendStatus',
+            method: 'GET',
+            headers: headers,
+            json: true,
+            form: {'param':'come'}
+        }
+        //リクエスト送信
+        request(options, function (error) {
+            //コールバックで色々な処理
+            console.log(error);
+        })
     });
     om.on('flat', function (obj) {
         ar_control.flat()
