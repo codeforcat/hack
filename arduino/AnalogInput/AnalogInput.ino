@@ -44,9 +44,9 @@ void loop() {
   // turn the ledPin on
   digitalWrite(ledPin, HIGH);
   // stop the program for <sensorValue> milliseconds:
-  delay(sensorValue);
+  delay(1000);
   // turn the ledPin off:
   digitalWrite(ledPin, LOW);
   // stop the program for for <sensorValue> milliseconds:
-  delay(sensorValue);
+  delay(1000);
 }
