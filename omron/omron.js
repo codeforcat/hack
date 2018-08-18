@@ -28,6 +28,7 @@ module.exports = function () {
             device.onsensordata = (data) => {
                 // let json = JSON.stringify(data);
                 // let parsed = JSON.parse(json);
+                console.log('temperature: ' + data.temperature)
                 if (data.temperature > 25) {
                     eventEmitter.emit('flat');
                 } else if (data.temperature < 20) {
@@ -43,7 +44,7 @@ module.exports = function () {
                 data.soundNoise = data.soundNoise > 40 ? 1 : 0;
                 data.discomfortIndex = data.discomfortIndex > 10 ? 1 : 0;
                 data.heatStroke = data.heatStroke > 30 ?  1 : 0;
-                console.log(JSON.stringify(data, null, '  '));
+                // console.log(JSON.stringify(data, null, '  '));
                 eventEmitter.emit('measure', data);
 
             };
