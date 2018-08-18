@@ -19,6 +19,7 @@
   "dependencies": {
     "events": "^3.0.0",
     "noble": "^1.9.1",
-    "node-omron-envsensor": "0.0.1"
+    "node-omron-envsensor": "0.0.1",
+    "socket.io-client": "^2.1.1"
   }
 }
