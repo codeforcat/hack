@@ -36,18 +36,14 @@ module.exports = function () {
                     currentCondition = 'low';
                 }
                 //TODO JSONで取得したデータを全て送る。
-                console.log(JSON.stringify(data, null, '  '));
-                eventEmitter.emit('measure', () => {
-                    return json;
-                })
+                // console.log(JSON.stringify(data, null, '  '));
+                eventEmitter.emit('measure', data)
 
                 if (condition !== currentCondition) {
                     condition = currentCondition;
                     //TODO 状態データを送る
-                    console.log(condition);
-                    eventEmitter.emit('conditionChange', () => {
-                        return condition;
-                    });
+                    // console.log(condition);
+                    eventEmitter.emit('conditionChange', condition);
                 }
             };
             return device.connect();
