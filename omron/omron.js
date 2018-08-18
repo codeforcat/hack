@@ -11,6 +11,8 @@ module.exports = function () {
     // Initialize the `Envsensor` object
     let device = null;
 
+    let lastTemperature;
+
     var omron = function (obj) {
         envsensor.init().then(() => {
             // 1分を制限時間としてデバイスを検索する。
@@ -28,14 +30,12 @@ module.exports = function () {
             device.onsensordata = (data) => {
                 // let json = JSON.stringify(data);
                 // let parsed = JSON.parse(json);
-                console.log('temperature: ' + data.temperature)
-                if (data.temperature > 25) {
+                if (data.temperature > 25 && lastTemperature <= 25) {
                     eventEmitter.emit('flat');
-                } else if (data.temperature < 20) {
+                } else if (data.temperature < 20 && lastTemperature >= 20) {
                     eventEmitter.emit('round');
                 }
 
-                let currentCondition;
                 data.temperature = data.temperature > 20.0 ? 1 : 0;
                 data.humidity = data.humidity > 50.0 ? 1 : 0;
                 data.ambientLight = data.ambientLight > 100 ? 1 : 0;
