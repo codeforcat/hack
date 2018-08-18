@@ -1,0 +1,24 @@
+{
+  "name": "hack",
+  "version": "1.0.0",
+  "description": "Code for CAT 2018 Ishinomaki hackathon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeforcat/hack.git"
+  },
+  "author": "Code for CAT",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeforcat/hack/issues"
+  },
+  "homepage": "https://github.com/codeforcat/hack#readme",
+  "dependencies": {
+    "events": "^3.0.0",
+    "noble": "^1.9.1",
+    "node-omron-envsensor": "0.0.1"
+  }
+}
