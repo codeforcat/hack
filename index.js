@@ -65,9 +65,13 @@ var omron_arduino = function () {
         console.log('measure: ' + obj.temperature);
         jhonny_measure(obj);
     });
-    om.on('conditionChange', function (obj) {
-        console.log('conditionChange: ' + obj);
+    om.on('flat', function (obj) {
+        console.log('たいらになるにゃー');
     });
+    om.on('round', function (obj) {
+        console.log('まるまるにゃー');
+    });
+
     om.init(obj);
 }
 omron_arduino(obj);
