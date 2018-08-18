@@ -1,0 +1,12 @@
+/vendor/*
+/tmp/*
+/logs/*
+/nbproject/*
+/config/config.yml
+.DS_Store
+.idea
+docker/mysql/*
+/node_modules/*
+/node_modules/*
+
+!empty
