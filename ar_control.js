@@ -2,7 +2,7 @@ module.exports = function() {
   console.log("ar module");
   var events = require('events');
   var eventEmitter = new events.EventEmitter();
-  var mesure_data = {};
+  var measure_data = {};
 
   // var _init = function(capsule_obj) {
   //   send_error(capsule_obj);
@@ -53,9 +53,21 @@ module.exports = function() {
       // data.heatStroke;
     };
     eventEmitter.emit('johnnyready');
-
+  };
+  eventEmitter.measure = function(data) {
+    console.log("measure");
+    console.log(data);
+    measure_data = data;
+    // data.temperature;
+    // data.humidity;
+    // data.ambientLight;
+    // data.uvIndex;
+    // data.pressure;
+    // data.soundNoise;
+    // data.discomfortIndex;
+    // data.heatStroke;
+  };
   });
   return eventEmitter;
-
 
 }

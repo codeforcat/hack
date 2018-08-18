@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/codeforcat/hack#readme",
   "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "events": "^3.0.0",
     "express": "^4.16.3",
     "johnny-five": "^0.15.0",
