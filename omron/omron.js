@@ -30,11 +30,13 @@ module.exports = function () {
             device.onsensordata = (data) => {
                 // let json = JSON.stringify(data);
                 // let parsed = JSON.parse(json);
+                console.log(lastTemperature + ' => ' + data.temperature);
                 if (data.temperature > 25 && lastTemperature <= 25) {
                     eventEmitter.emit('flat');
-                } else if (data.temperature < 20 && lastTemperature >= 20) {
+                } else if (data.temperature < 23 && lastTemperature >= 23) {
                     eventEmitter.emit('round');
                 }
+                lastTemperature = data.temperature
 
                 data.temperature = data.temperature > 20.0 ? 1 : 0;
                 data.humidity = data.humidity > 50.0 ? 1 : 0;
